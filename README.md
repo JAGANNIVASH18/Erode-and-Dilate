@@ -8,6 +8,8 @@ To perform erosion and dilation operations on a text image using Python and Open
 ## Software Required
 - Anaconda – Python 3.7
 - OpenCV
+- NumPy
+- Matplotlib
 
 ---
 
@@ -30,99 +32,97 @@ Apply the dilation operation and display the output images.
 
 ---
 
-## Program
+# Program
 
-### Import the Necessary Packages
-
+## Import the Necessary Packages
 ```python
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+%matplotlib inline
 ```
 
-### Create the Text using cv2.putText
-
+## Create the Text using cv2.putText
 ```python
-img2 = np.zeros((100,400), dtype='uint8')
+# Replace 'ABCDE' with your name (only the first 5 characters)
 
-font = cv2.FONT_HERSHEY_SIMPLEX
+def load_img():
 
-cv2.putText(
-    img2,
-    'TheAILearner',
-    (5,70),
-    font,
-    2,
-    (255),
-    5,
-    cv2.LINE_AA
-)
+    blank_img = np.zeros((600,600))
+
+    font = cv2.FONT_HERSHEY_SIMPLEX
+
+    cv2.putText(blank_img,
+                text='JAGAN',
+                org=(50,300),
+                fontFace=font,
+                fontScale=5,
+                color=(255,255,255),
+                thickness=25,
+                lineType=cv2.LINE_AA)
+
+    return blank_img
 ```
 
-### Create the Structuring Element
-
+## Display the Image
 ```python
-kernel = np.ones((5,5), np.uint8)
+def display_img(img):
 
-kernel1 = cv2.getStructuringElement(
-    cv2.MORPH_CROSS,
-    (7,7)
-)
-```
+    fig = plt.figure(figsize=(12,10))
 
-### Erode the Image
+    ax = fig.add_subplot(111)
 
-```python
-image_erode1 = cv2.erode(img2, kernel1)
-```
-
-### Dilate the Image
-
-```python
-image_dilate1 = cv2.dilate(img2, kernel1)
-```
-
-### Display the Results
-
-```python
-titles = ["Original Image", "Eroded Image", "Dilated Image"]
-
-images = [img2, image_erode1, image_dilate1]
-
-for i in range(0,3):
-
-    plt.figure(figsize=(10,10))
-
-    plt.subplot(1,2,1)
-    plt.title("Original Image")
-    plt.imshow(img2, cmap='gray')
-    plt.axis("off")
-
-    plt.subplot(1,2,2)
-    plt.title(titles[i])
-    plt.imshow(images[i], cmap='gray')
-    plt.axis("off")
+    ax.imshow(img, cmap='gray')
 
     plt.show()
 ```
 
+## Load and Display the Original Image
+```python
+img = load_img()
+
+display_img(img)
+```
+
+## Create the Structuring Element
+```python
+kernel = np.ones((5,5), dtype=np.uint8)
+
+kernel
+```
+
+## Erode the Image
+```python
+erosion1 = cv2.erode(img, kernel, iterations=1)
+
+display_img(erosion1)
+```
+
+## Dilate the Image
+```python
+dilation1 = cv2.dilate(img, kernel, iterations=1)
+
+display_img(dilation1)
+```
+
 ---
 
-## Output
+# Output
 
-### Display the Input Image
-<img width="731" height="119" alt="image" src="https://github.com/user-attachments/assets/c3a30b36-89d9-4c59-9f1a-4bc28329c597" />
-
-
-### Display the Eroded Image
-<img width="771" height="115" alt="image" src="https://github.com/user-attachments/assets/f71028ef-52d0-46e1-b0fd-0a6aa0ddb3df" />
+## Original Image
+<img width="716" height="692" alt="image" src="https://github.com/user-attachments/assets/c320f089-ddd1-4964-9a7a-ad27125aecde" />
 
 
-### Display the Dilated Image
-<img width="724" height="127" alt="image" src="https://github.com/user-attachments/assets/41dc8642-c867-4afd-850b-1abc0b97cb9e" />
+## Eroded Image
+<img width="745" height="676" alt="image" src="https://github.com/user-attachments/assets/c4be1753-873d-4c51-b9d1-01b6a3a65750" />
 
+
+## Dilated Image
+<img width="713" height="697" alt="image" src="https://github.com/user-attachments/assets/c1dd60e3-7614-4723-83be-669ffc78acc3" />
 
 ---
 
-## Result
+# Result
 Thus, erosion and dilation operations were successfully performed on the generated text image using Python and OpenCV.
+
+---
